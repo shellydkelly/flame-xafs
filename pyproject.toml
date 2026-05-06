@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "flame-xafs"
+version = "0.0.1"
+description = "Fluorescence XAFS Multi-Element Processor"
+readme = "README.md"
+license = "BSD-3-Clause"
+requires-python = ">=3.9"
+authors = [
+    { name = "APS Spectroscopy Group" },
+]
+keywords = ["xafs", "xrf", "fluorescence", "spectroscopy", "synchrotron"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "numpy>=1.22",
+    "scipy>=1.7",
+    "h5py>=3.0",
+]
+
+[project.optional-dependencies]
+gui = [
+    "wxPython>=4.2",
+    "wxmplot>=0.9",
+    "matplotlib>=3.5",
+    "xraylarch>=2024.0",
+]
+
+[project.scripts]
+flame = "flame.gui:main"
+
+[project.urls]
+Homepage = "https://github.com/spc-group/flame-xafs"
+Repository = "https://github.com/spc-group/flame-xafs"
+Issues = "https://github.com/spc-group/flame-xafs/issues"
