@@ -35,6 +35,9 @@ gui = [
     "xraylarch>=2024.0",
 ]
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/flame"]
+
 [project.scripts]
 flame = "flame.gui:main"
 

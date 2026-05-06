@@ -1196,7 +1196,9 @@ class MainFrame(wx.Frame):
         super().__init__(None, title="FLAME - Fluorescence XAFS Multi-Element Processor", size=(1200, 700))
         icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resources", "flame_icon.ico")
         if os.path.exists(icon_path):
-            self.SetIcon(wx.Icon(icon_path))
+            ib = wx.IconBundle()
+            ib.AddIcon(icon_path, wx.BITMAP_TYPE_ICO)
+            self.SetIcons(ib)
         self.panel = XrfViewerPanel(self)
         self.Show()
 
