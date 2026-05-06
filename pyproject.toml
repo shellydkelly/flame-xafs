@@ -39,6 +39,6 @@ gui = [
 flame = "flame.gui:main"
 
 [project.urls]
-Homepage = "https://github.com/spc-group/flame-xafs"
-Repository = "https://github.com/spc-group/flame-xafs"
-Issues = "https://github.com/spc-group/flame-xafs/issues"
+Homepage = "https://github.com/shellydkelly/flame-xafs"
+Repository = "https://github.com/shellydkelly/flame-xafs"
+Issues = "https://github.com/shellydkelly/flame-xafs/issues"
