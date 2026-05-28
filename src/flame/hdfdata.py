@@ -31,10 +31,42 @@ class HdfData:
                         full_name = key + "/value"
                         self.scalar_signals[full_name] = ds[:]
                         self.scalar_signal_names.append(full_name)
+
+        self.uid = uid
         self.cal_scale = np.ones(self.n_elements)
         self.cal_offset = np.zeros(self.n_elements)
         self.cal_peaks = None
         self.calibrated = False
+
+    @staticmethod
+    def export_transmission_columns(hdf5_path, out_path, delimiter="\t"):
+        with h5py.File(hdf5_path, "r") as f:
+            uid = list(f.keys())[0]
+            primary = f[uid + "/instrument/bluesky/streams/primary"]
+
+            def read_1d(name):
+                ds = primary[name + "/value"]
+                arr = np.asarray(ds[:], dtype=float)
+                if arr.ndim != 1:
+                    raise ValueError("Expected 1D dataset for {}".format(name))
+                return arr
+
+            energy = np.asarray(primary["monochromator-energy/value"][:], dtype=float)
+            ipreslit = read_1d("Ipreslit-count")
+            iprekb = read_1d("IpreKB-count")
+            i0 = read_1d("I0-count")
+            it = read_1d("It-count")
+            iref = read_1d("Iref-count")
+
+        n = len(energy)
+        cols = [ipreslit, iprekb, i0, it, iref]
+        for c in cols:
+            if len(c) != n:
+                raise ValueError("Column length mismatch")
+
+        header = delimiter.join(["mono-energy", "Ipreslit-count", "IpreKB-count", "I0-count", "It-count", "Iref-count"])
+        data = np.column_stack([energy, ipreslit, iprekb, i0, it, iref])
+        np.savetxt(out_path, data, delimiter=delimiter, header=header, comments="")
 
     def get_scalar_signal(self, name):
         return self.scalar_signals.get(name, np.ones(self.n_points))
